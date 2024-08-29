@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "denim:block/frying_pan",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "denim:block/frying_pan",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "denim:block/frying_pan"
+    },
+    "facing=west": {
+      "model": "denim:block/frying_pan",
+      "y": 90
+    }
+  }
+}
