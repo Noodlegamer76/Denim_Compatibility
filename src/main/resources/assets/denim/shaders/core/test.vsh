@@ -1,13 +1,17 @@
-#version 330
+#version 150
 
-uniform mat4 ModelViewMat;
-uniform mat4 ProjMat;
+#moj_import <fog.glsl>
 
 in vec3 Position;
 
-out vec4 color;
+uniform mat4 ProjMat;
+uniform mat4 ModelViewMat;
+uniform int FogShape;
+
+out float vertexDistance;
 
 void main() {
-    color = vec4(1.0, 1.0, Position.z, 1.0);
-    gl_Position = ModelViewMat * ProjMat * vec4(Position, 1);
+    gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
+
+    vertexDistance = fog_distance(ModelViewMat, Position, FogShape);
 }

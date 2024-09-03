@@ -1,9 +1,11 @@
 package com.noodlegamer76.denim.datagen;
 
 import com.noodlegamer76.denim.DenimMod;
+import com.noodlegamer76.denim.item.InitItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -20,8 +22,12 @@ public class ModItemTagGenerator extends ItemTagsProvider {
     protected void addTags(HolderLookup.Provider pProvider) {
 
 
-        //    this.tag(ModTags.Items.RAINBOW_WOOD)
-        //            .add(ItemInit.RAINBOW_LOG.get())
+        this.tag(ItemTags.TRIMMABLE_ARMOR)
+                .add(InitItems.JELMET.get(),
+                        InitItems.JACKET.get(),
+                        InitItems.JEANS.get(),
+                        InitItems.JOOTS.get()
+                );
 //
         //    this.tag(ItemTags.DOORS)
         //            .add(ItemInit.RAINBOW_DOOR.get());

@@ -2,13 +2,16 @@ package com.noodlegamer76.denim.client.renderer.block;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Axis;
 import com.noodlegamer76.denim.entity.block.RenderTester;
 import com.noodlegamer76.denim.event.RegisterShadersEvent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 
 public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer<RenderTester> {
     public static final ResourceLocation TEXTURE = new ResourceLocation("minecraft", "textures/block/stone.png");
@@ -21,7 +24,7 @@ public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
 
-        RenderSystem.setShader(() -> RegisterShadersEvent.TEST);
+        RenderSystem.setShader(() -> RegisterShadersEvent.test);
 
         Matrix4f matrix4f = poseStack.last().pose();
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);

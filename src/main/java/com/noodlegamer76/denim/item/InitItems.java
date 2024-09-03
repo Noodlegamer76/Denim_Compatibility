@@ -16,6 +16,16 @@ public class InitItems {
             () -> new TestItem(new Item.Properties()));
     public static final RegistryObject<Item> RENDER_TESTER_BLOCK_ITEM = ITEMS.register("render_tester_block",
             () -> new BlockItem(InitBlocks.RENDER_TESTER_BLOCK.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> FRYING_PAN = ITEMS.register("frying_pan",
             () -> new FryingPan(InitBlocks.FRYING_PAN_BLOCK.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> JELMET = ITEMS.register("jelmet",
+            () -> new ArmorItem(ModArmorMaterials.DENIM, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> JACKET = ITEMS.register("jacket",
+            () -> new ArmorItem(ModArmorMaterials.DENIM, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> JEANS = ITEMS.register("jeans",
+            () -> new ArmorItem(ModArmorMaterials.DENIM, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> JOOTS = ITEMS.register("joots",
+            () -> new ArmorItem(ModArmorMaterials.DENIM, ArmorItem.Type.BOOTS, new Item.Properties()));
 }

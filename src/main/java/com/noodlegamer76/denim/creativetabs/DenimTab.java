@@ -11,6 +11,11 @@ public class DenimTab {
             event.accept(InitItems.TEST_ITEM);
             event.accept(InitItems.RENDER_TESTER_BLOCK_ITEM);
             event.accept(InitItems.FRYING_PAN);
+
+            event.accept(InitItems.JELMET);
+            event.accept(InitItems.JACKET);
+            event.accept(InitItems.JEANS);
+            event.accept(InitItems.JOOTS);
         }
     }
 }
