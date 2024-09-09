@@ -28,4 +28,7 @@ public class InitItems {
             () -> new ArmorItem(ModArmorMaterials.DENIM, ArmorItem.Type.LEGGINGS, new Item.Properties()));
     public static final RegistryObject<Item> JOOTS = ITEMS.register("joots",
             () -> new ArmorItem(ModArmorMaterials.DENIM, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> CONFETTI_TNT = ITEMS.register("confetti_tnt",
+            () -> new BlockItem(InitBlocks.CONFETTI_TNT.get(), new Item.Properties()));
 }

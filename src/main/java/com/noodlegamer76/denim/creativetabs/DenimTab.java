@@ -16,6 +16,8 @@ public class DenimTab {
             event.accept(InitItems.JACKET);
             event.accept(InitItems.JEANS);
             event.accept(InitItems.JOOTS);
+
+            event.accept(InitItems.CONFETTI_TNT);
         }
     }
 }

@@ -14,6 +14,11 @@ public class InitBlocks {
 
     public static final RegistryObject<Block> RENDER_TESTER_BLOCK = BLOCKS.register("render_tester",
             () -> new RenderTesterBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(DyeColor.BLACK).noCollission().noOcclusion()));
+
     public static final RegistryObject<Block> FRYING_PAN_BLOCK = BLOCKS.register("frying_pan",
             () -> new FryingPan(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(DyeColor.BLACK).noOcclusion()));
+
+
+    public static final RegistryObject<Block> CONFETTI_TNT = BLOCKS.register("confetti_tnt",
+            () -> new ConfettiTnt(BlockBehaviour.Properties.copy(Blocks.TNT)));
 }

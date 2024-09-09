@@ -49,6 +49,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         trimmedArmorItem(InitItems.JEANS);
         trimmedArmorItem(InitItems.JOOTS);
 
+        evenSimplerBlockItem(InitBlocks.CONFETTI_TNT);
     }
 
     private ItemModelBuilder saplingItem(RegistryObject<Block> item) {
