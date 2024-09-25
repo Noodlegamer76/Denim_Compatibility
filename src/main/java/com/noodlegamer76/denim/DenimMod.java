@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.noodlegamer76.denim.block.InitBlocks;
 import com.noodlegamer76.denim.client.renderer.ModDimensionSpecialEffects;
 import com.noodlegamer76.denim.client.renderer.block.TestRenderer;
+import com.noodlegamer76.denim.client.renderer.entity.ConfettiTntRenderer;
 import com.noodlegamer76.denim.creativetabs.DenimTab;
 import com.noodlegamer76.denim.creativetabs.InitCreativeTabs;
 import com.noodlegamer76.denim.entity.InitEntity;
@@ -11,6 +12,7 @@ import com.noodlegamer76.denim.entity.block.InitBlockEntities;
 import com.noodlegamer76.denim.event.RegisterShadersEvent;
 import com.noodlegamer76.denim.item.InitItems;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -25,8 +27,10 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DenimMod.MODID)
@@ -36,10 +40,12 @@ public class DenimMod
     public static final String MODID = "denim";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, DenimMod.MODID);
 
     public DenimMod()
     {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        GeckoLib.initialize();
 
 
         // Register the commonSetup method for modloading
@@ -104,6 +110,8 @@ public class DenimMod
         @SubscribeEvent
         public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(InitBlockEntities.RENDER_TESTER.get(), TestRenderer::new);
+
+           // event.registerEntityRenderer(InitEntity.CONFETTI_TNT.get(), ConfettiTntRenderer::new);
         }
     }
 }

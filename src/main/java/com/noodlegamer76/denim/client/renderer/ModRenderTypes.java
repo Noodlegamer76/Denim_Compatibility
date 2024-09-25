@@ -21,7 +21,10 @@ public class ModRenderTypes extends RenderStateShard {
                     .setShaderState(new RenderStateShard.ShaderStateShard(() -> RegisterShadersEvent.test))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
                             .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false).build())
+                    .setOutputState(RenderStateShard.MAIN_TARGET)
                     .createCompositeState(true)
+
+
     );
 
     public ModRenderTypes(String pName, Runnable pSetupState, Runnable pClearState) {

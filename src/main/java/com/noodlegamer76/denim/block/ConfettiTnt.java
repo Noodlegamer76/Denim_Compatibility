@@ -1,5 +1,6 @@
 package com.noodlegamer76.denim.block;
 
+import com.noodlegamer76.denim.entity.block.PrimedConfettiTnt;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +23,7 @@ public class ConfettiTnt extends TntBlock {
     @Override
     public void onCaughtFire(BlockState state, Level world, BlockPos pos, @Nullable net.minecraft.core.Direction face, @Nullable LivingEntity igniter) {
         if (!world.isClientSide) {
-            PrimedTnt primedtnt = new PrimedTnt(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, igniter);
+            PrimedConfettiTnt primedtnt = new PrimedConfettiTnt(world, (double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, igniter);
             world.addFreshEntity(primedtnt);
             world.playSound((Player)null, primedtnt.getX(), primedtnt.getY(), primedtnt.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F);
             world.gameEvent(igniter, GameEvent.PRIME_FUSE, pos);
@@ -32,7 +33,7 @@ public class ConfettiTnt extends TntBlock {
     @Override
     public void wasExploded(Level pLevel, BlockPos pPos, Explosion pExplosion) {
         if (!pLevel.isClientSide) {
-            PrimedTnt primedtnt = new PrimedTnt(pLevel, (double)pPos.getX() + 0.5D, (double)pPos.getY(), (double)pPos.getZ() + 0.5D, pExplosion.getIndirectSourceEntity());
+            PrimedConfettiTnt primedtnt = new PrimedConfettiTnt(pLevel, (double)pPos.getX() + 0.5D, (double)pPos.getY(), (double)pPos.getZ() + 0.5D, pExplosion.getIndirectSourceEntity());
             int i = primedtnt.getFuse();
             primedtnt.setFuse((short)(pLevel.random.nextInt(i / 4) + i / 8));
             pLevel.addFreshEntity(primedtnt);
