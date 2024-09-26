@@ -21,4 +21,5 @@ void main() {
     //vec3 screen = projectAndDivide(ProjMat, vec3(gl_FragDepth) * 2.0 - 1.0);
     //vec3 player = mat3(inverse(ProjMat)) * screen;
     fragColor = vec4(gl_FragDepth);
+    fragColor = vec4(1.0, 0.0, 0.0, 1.0);
 }

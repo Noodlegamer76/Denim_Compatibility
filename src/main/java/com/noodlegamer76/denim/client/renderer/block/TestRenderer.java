@@ -32,24 +32,21 @@ public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer
         RenderSystem.setShader(() -> RegisterShadersEvent.test);
 
         Matrix4f matrix4f = poseStack.last().pose();
-        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-       // bufferbuilder.vertex(matrix4f, 0, 0, 0).uv(1.0F, 0.0F).color(255, 255, 0, 255).endVertex();
-       // bufferbuilder.vertex(matrix4f, 0, 1, 0).uv(0.0F, 1.0F).color(255, 0, 255, 255).endVertex();
-       // bufferbuilder.vertex(matrix4f, 1, 1, 0).uv(1.0F, 1.0F).color(0, 255, 255, 255).endVertex();
-       // bufferbuilder.vertex(matrix4f, 1, 0, 0).uv(1.0F, 0.0F).color(255, 255, 255, 255).endVertex();
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
-        Vector3f worldCenter = new Vector3f(pBlockEntity.getBlockPos().getX(), pBlockEntity.getBlockPos().getY(), pBlockEntity.getBlockPos().getZ());
-        for(int i = 0; i < 4; i++) {
-            Vec3 corner;
-            switch (i) {
-                case 1 : corner = new Vec3(camera.getLeftVector().x, camera.getUpVector().y, camera.getLookVector().z);
-                case 2 : corner = new Vec3(-camera.getLeftVector().x, camera.getUpVector().y, camera.getLookVector().z);
-                case 3 : corner = new Vec3(-camera.getLeftVector().x, -camera.getUpVector().y, camera.getLookVector().z);
-                case 4 : corner = new Vec3(camera.getLeftVector().x, -camera.getUpVector().y, camera.getLookVector().z);
-            }
+        Vec3 worldCenter = new Vec3(-pBlockEntity.getBlockPos().getX(), -pBlockEntity.getBlockPos().getY(), -pBlockEntity.getBlockPos().getZ());
+        Camera.NearPlane near = camera.getNearPlane();
+        //Vec3 last = new Vec3(worldCenter.x + neat, worldCenter.y + cameraPos.y, worldCenter.z + near.);
 
-            bufferbuilder.vertex(matrix4f,-worldCenter.x + corner.x, -worldCenter.y() + corner.y, -worldCenter.z() + corner.z).uv(1.0F, 0.0F).color(255, 255, 255, 255).endVertex();
-        }
+        bufferbuilder.vertex(matrix4f, (float) near.getBottomLeft().x, (float) near.getBottomLeft().y, (float) near.getBottomLeft().z)
+                .color(255, 255, 255, 255).endVertex();
+        bufferbuilder.vertex(matrix4f, (float) near.getTopLeft().x, (float) near.getTopLeft().y, (float) near.getTopLeft().z)
+                .color(255, 255, 255, 255).endVertex();
+        bufferbuilder.vertex(matrix4f, (float) near.getTopRight().x, (float) near.getTopRight().y, (float) near.getTopRight().z)
+                .color(255, 255, 255, 255).endVertex();
+        bufferbuilder.vertex(matrix4f, (float) near.getBottomRight().x, (float) near.getBottomRight().y, (float) near.getBottomRight().z)
+                .color(255, 255, 255, 255).endVertex();
+
         tesselator.end();
     }
 }
