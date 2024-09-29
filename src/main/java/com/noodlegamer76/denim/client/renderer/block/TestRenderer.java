@@ -53,8 +53,11 @@ public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer
 //
        //tesselator.end();
 
-
-        Minecraft.getInstance().gameRenderer.loadEffect(SHADER_LOCATION);
+        if (Minecraft.getInstance().gameRenderer.currentEffect() == null ||
+                !(Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/test.json"))) {
+            Minecraft.getInstance().gameRenderer.loadEffect(SHADER_LOCATION);
+            System.out.println("LOADING");
+        }
        // RenderSystem.setShader(() -> RegisterShadersEvent.test);
 //
        // RenderSystem.enableBlend();

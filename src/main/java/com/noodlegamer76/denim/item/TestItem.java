@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class TestItem extends Item {
     public static final ResourceLocation SHADER_LOCATION = new ResourceLocation("denim", "shaders/post/test.json");
@@ -41,7 +42,15 @@ public class TestItem extends Item {
             //      RenderSystem.defaultBlendFunc();
             //
             //  }
-        Minecraft.getInstance().gameRenderer.togglePostEffect();
+
+        if (pLevel.isClientSide) {
+            if (Minecraft.getInstance().gameRenderer.currentEffect() != null &&
+                    Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/test.json")) {
+                Minecraft.getInstance().gameRenderer.shutdownEffect();
+                System.out.println("YES");
+            }
+        }
+
          return super.use(pLevel, pPlayer, pUsedHand);
     }
 }
