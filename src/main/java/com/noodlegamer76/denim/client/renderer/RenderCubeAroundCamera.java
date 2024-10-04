@@ -19,8 +19,6 @@ import java.awt.*;
 
 public class RenderCubeAroundCamera {
 
-    public static final ResourceLocation END_PORTAL_LOCATION = new ResourceLocation("textures/entity/end_portal.png");
-
     public static void createCubeWithShader(ShaderInstance shader, PoseStack poseStack, BlockEntity entity, MultiBufferSource buffer) {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
@@ -31,6 +29,7 @@ public class RenderCubeAroundCamera {
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
 
         RenderSystem.enableBlend();
+        RenderSystem.depthMask(false);
 
        // RenderSystem.setShader(() -> RegisterShadersEvent.test);
        // RenderSystem.setShaderTexture(0, END_PORTAL_LOCATION);
@@ -78,6 +77,7 @@ public class RenderCubeAroundCamera {
         //tesselator.end();
         poseStack.popPose();
 
+        RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
     }
 }

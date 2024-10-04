@@ -12,15 +12,15 @@ public class ModRenderTypes extends RenderStateShard {
 
     public static final RenderType TEST_RENDERER = RenderType.create(
             "test",
-            DefaultVertexFormat.BLIT_SCREEN,
+            DefaultVertexFormat.POSITION,
             VertexFormat.Mode.QUADS,
-            256,
+            100000,
             false,
             false,
             RenderType.CompositeState.builder()
                     .setShaderState(new RenderStateShard.ShaderStateShard(() -> RegisterShadersEvent.test))
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
-                            .add(TheEndPortalRenderer.END_PORTAL_LOCATION, false, false).build())
+                            .build())
                     .setOutputState(RenderStateShard.MAIN_TARGET)
                     .createCompositeState(true)
 

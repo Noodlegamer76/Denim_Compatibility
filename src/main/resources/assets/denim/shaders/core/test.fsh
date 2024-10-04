@@ -28,8 +28,8 @@ void main() {
 
     float DistanceFromCamera = length(viewPos);
 
-    vec3 fogColorClose = vec3(0.8,0.8,0.8);
-    vec3 fogColorFar = vec3(0.8,0.8,0.8);
+    vec3 fogColorClose = vec3(1.0,0.,0.);
+    vec3 fogColorFar = vec3(1.0,0.,0.);
 
     float fogMinimum = 0.;
     float fogMaximum = 1.25;
