@@ -12,7 +12,7 @@ public class ModRenderTypes extends RenderStateShard {
 
     public static final RenderType TEST_RENDERER = RenderType.create(
             "test",
-            DefaultVertexFormat.POSITION,
+            DefaultVertexFormat.BLIT_SCREEN,
             VertexFormat.Mode.QUADS,
             256,
             false,

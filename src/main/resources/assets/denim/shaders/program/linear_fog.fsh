@@ -1,14 +1,11 @@
 #version 150
 
-uniform sampler2D DiffuseSampler;
-
-uniform float InverseAmount;
-
 out vec4 fragColor;
 
 void main(){
-    vec3 ScreenDepth = gl_FragCoord.xyz * 2.0 - 1;
+    vec4 diffuseColor = texture(DiffuseSampler, texCoord);
+    float maxColor = max(max(diffuseColor.r, diffuseColor.g), diffuseColor.b);
+    vec4 final = fract(diffuseColor + maxColor);
 
-    fragColor = vec4(outColor.rgb, 1.0);
-
+    fragColor = final;
 }

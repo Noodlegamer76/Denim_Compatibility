@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class TestItem extends Item {
-    public static final ResourceLocation SHADER_LOCATION = new ResourceLocation("denim", "shaders/post/test.json");
 
     //item i use to trigger stuff in the mod
     public TestItem(Properties pProperties) {
@@ -45,7 +44,7 @@ public class TestItem extends Item {
 
         if (pLevel.isClientSide) {
             if (Minecraft.getInstance().gameRenderer.currentEffect() != null &&
-                    Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/test.json")) {
+                    Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/linear_fog.json")) {
                 Minecraft.getInstance().gameRenderer.shutdownEffect();
                 System.out.println("YES");
             }

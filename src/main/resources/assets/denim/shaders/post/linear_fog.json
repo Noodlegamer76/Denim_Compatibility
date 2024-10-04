@@ -1,22 +1,16 @@
 {
     "targets": [
-        "swap"
+        "linear_fog"
     ],
     "passes": [
         {
-            "name": "linear_fog",
+            "name": "denim:linear_fog",
             "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "uniforms": [
-                {
-                    "name": "InverseAmount",
-                    "values": [ 0.8 ]
-                }
-            ]
+            "outtarget": "linear_fog"
         },
         {
             "name": "blit",
-            "intarget": "swap",
+            "intarget": "linear_fog",
             "outtarget": "minecraft:main"
         }
     ]

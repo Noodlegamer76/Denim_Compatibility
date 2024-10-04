@@ -1,22 +1,16 @@
 {
     "targets": [
-        "swap"
+        "test"
     ],
     "passes": [
         {
-            "name": "invert",
+            "name": "denim:test",
             "intarget": "minecraft:main",
-            "outtarget": "swap",
-            "uniforms": [
-                {
-                    "name": "InverseAmount",
-                    "values": [ 0.8 ]
-                }
-            ]
+            "outtarget": "test"
         },
         {
             "name": "blit",
-            "intarget": "swap",
+            "intarget": "test",
             "outtarget": "minecraft:main"
         }
     ]
