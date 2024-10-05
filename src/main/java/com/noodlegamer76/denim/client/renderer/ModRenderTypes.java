@@ -22,6 +22,9 @@ public class ModRenderTypes extends RenderStateShard {
                     .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
                             .build())
                     .setOutputState(RenderStateShard.MAIN_TARGET)
+                    .setOverlayState(RenderStateShard.OVERLAY)
+                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                     .createCompositeState(true)
 
 

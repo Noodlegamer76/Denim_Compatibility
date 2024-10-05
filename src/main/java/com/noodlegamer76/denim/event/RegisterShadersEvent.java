@@ -33,7 +33,8 @@ public class RegisterShadersEvent {
     public static void registerShaders(net.minecraftforge.client.event.RegisterShadersEvent event) throws IOException {
 
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
-                new ResourceLocation(DenimMod.MODID, "test"),
+                //new ResourceLocation(DenimMod.MODID, "test"),
+                        new ResourceLocation(DenimMod.MODID, "test"),
                 DefaultVertexFormat.BLOCK),
                 (e) -> test = e);
     }

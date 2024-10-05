@@ -34,14 +34,14 @@ public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer
     @Override
     public void render(RenderTester pBlockEntity, float pPartialTick, PoseStack poseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
 
-        RenderCubeAroundCamera.createCubeWithShader(RegisterShadersEvent.test, poseStack, pBlockEntity, pBuffer);
+       // RenderCubeAroundCamera.createCubeWithShader(RegisterShadersEvent.test, poseStack, pBlockEntity, pBuffer);
 
 
-       // if (Minecraft.getInstance().gameRenderer.currentEffect() == null ||
-       //         !(Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/linear_fog.json"))) {
-       //     Minecraft.getInstance().gameRenderer.loadEffect(SHADER_LOCATION);
-       //     System.out.println("LOADING");
-       // }
+        if (Minecraft.getInstance().gameRenderer.currentEffect() == null ||
+                !(Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/linear_fog.json"))) {
+            Minecraft.getInstance().gameRenderer.loadEffect(SHADER_LOCATION);
+            System.out.println("LOADING");
+        }
     }
 }
 

@@ -4,7 +4,7 @@
         "srcrgb": "srcalpha",
         "dstrgb": "1-dstalpha"
     },
-    "vertex": "screenquad",
+    "vertex": "denim:linear_fog",
     "fragment": "denim:linear_fog",
     "uniforms": [
         { "name": "ProjMat",  "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },

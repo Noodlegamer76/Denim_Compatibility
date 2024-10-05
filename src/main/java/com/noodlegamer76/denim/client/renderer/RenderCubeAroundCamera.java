@@ -28,8 +28,8 @@ public class RenderCubeAroundCamera {
 
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
 
-        RenderSystem.enableBlend();
         RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
 
        // RenderSystem.setShader(() -> RegisterShadersEvent.test);
        // RenderSystem.setShaderTexture(0, END_PORTAL_LOCATION);
@@ -77,7 +77,7 @@ public class RenderCubeAroundCamera {
         //tesselator.end();
         poseStack.popPose();
 
-        RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
+        RenderSystem.depthMask(true);
     }
 }
