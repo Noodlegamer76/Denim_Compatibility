@@ -1,5 +1,6 @@
 package com.noodlegamer76.denim;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import com.noodlegamer76.denim.block.InitBlocks;
 import com.noodlegamer76.denim.client.renderer.ModDimensionSpecialEffects;
@@ -10,7 +11,9 @@ import com.noodlegamer76.denim.creativetabs.InitCreativeTabs;
 import com.noodlegamer76.denim.entity.InitEntity;
 import com.noodlegamer76.denim.entity.block.InitBlockEntities;
 import com.noodlegamer76.denim.event.RegisterShadersEvent;
+import com.noodlegamer76.denim.event.RenderEvents;
 import com.noodlegamer76.denim.item.InitItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -26,11 +29,15 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.lwjgl.opengl.GL44;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
+
+import java.nio.ByteBuffer;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(DenimMod.MODID)
@@ -65,6 +72,7 @@ public class DenimMod
 
         if(Dist.CLIENT.isClient()) {
             modEventBus.register(new RegisterShadersEvent());
+            modEventBus.register(new RenderEvents());
         }
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
@@ -97,8 +105,12 @@ public class DenimMod
     public static class ClientModEvents
     {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
+        public static void onClientSetup(FMLClientSetupEvent event) {
+
+        }
+
+        @SubscribeEvent
+        public static void onClientStartup(InterModProcessEvent event) {
 
         }
 

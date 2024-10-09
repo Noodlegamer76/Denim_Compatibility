@@ -2,32 +2,43 @@ package com.noodlegamer76.denim.client.renderer;
 
 import com.mojang.blaze3d.vertex.*;
 import com.noodlegamer76.denim.event.RegisterShadersEvent;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 
 public class ModRenderTypes extends RenderStateShard {
-    protected static final RenderStateShard.OverlayStateShard OVERLAY = new RenderStateShard.OverlayStateShard(true);
-    protected static final RenderStateShard.OverlayStateShard NO_OVERLAY = new RenderStateShard.OverlayStateShard(false);
 
     public static final RenderType TEST_RENDERER = RenderType.create(
             "test",
             DefaultVertexFormat.POSITION,
             VertexFormat.Mode.QUADS,
             100000,
-            false,
-            false,
+            true,
+            true,
             RenderType.CompositeState.builder()
+                    .setLightmapState(LIGHTMAP)
                     .setShaderState(new RenderStateShard.ShaderStateShard(() -> RegisterShadersEvent.test))
-                    .setTextureState(RenderStateShard.MultiTextureStateShard.builder()
-                            .build())
-                    .setOutputState(RenderStateShard.MAIN_TARGET)
-                    .setOverlayState(RenderStateShard.OVERLAY)
-                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                    .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                    .setTextureState(NO_TEXTURE)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setOutputState(TRANSLUCENT_TARGET)
                     .createCompositeState(true)
+    );
 
-
+    public static final RenderType SKYBOX1_RENDERTYPE = RenderType.create(
+            "test",
+            DefaultVertexFormat.POSITION,
+            VertexFormat.Mode.QUADS,
+            100000,
+            true,
+            true,
+            RenderType.CompositeState.builder()
+                    .setLightmapState(LIGHTMAP)
+                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> RegisterShadersEvent.skybox1))
+                    .setTextureState(NO_TEXTURE)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setOutputState(TRANSLUCENT_TARGET)
+                    .createCompositeState(true)
     );
 
     public ModRenderTypes(String pName, Runnable pSetupState, Runnable pClearState) {

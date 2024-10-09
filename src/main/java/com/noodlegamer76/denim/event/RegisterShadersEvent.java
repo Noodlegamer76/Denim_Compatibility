@@ -7,6 +7,7 @@ import com.noodlegamer76.denim.DenimMod;
 import com.noodlegamer76.denim.client.renderer.ModRenderTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,15 +29,19 @@ import java.nio.IntBuffer;
 @Mod.EventBusSubscriber(modid = DenimMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RegisterShadersEvent {
     public static ShaderInstance test;
+    public static ShaderInstance skybox1;
 
     @SubscribeEvent
     public static void registerShaders(net.minecraftforge.client.event.RegisterShadersEvent event) throws IOException {
+        event.registerShader(new ShaderInstance(event.getResourceProvider(),
+                        new ResourceLocation(DenimMod.MODID, "test"),
+                        DefaultVertexFormat.BLOCK),
+                (e) -> test = e);
 
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
-                //new ResourceLocation(DenimMod.MODID, "test"),
-                        new ResourceLocation(DenimMod.MODID, "test"),
-                DefaultVertexFormat.BLOCK),
-                (e) -> test = e);
+                        new ResourceLocation(DenimMod.MODID, "skybox1"),
+                        DefaultVertexFormat.POSITION),
+                (e) -> skybox1 = e);
     }
 
     @SubscribeEvent

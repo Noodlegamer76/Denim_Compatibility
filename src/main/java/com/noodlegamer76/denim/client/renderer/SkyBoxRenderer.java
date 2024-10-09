@@ -3,9 +3,11 @@ package com.noodlegamer76.denim.client.renderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import com.noodlegamer76.denim.event.RegisterShadersEvent;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL44;
 
 public class SkyBoxRenderer {
 
@@ -13,11 +15,14 @@ public class SkyBoxRenderer {
                               ResourceLocation frontTexture, ResourceLocation backTexture, ResourceLocation leftTexture,
                               ResourceLocation rightTexture, ResourceLocation topTexture, ResourceLocation bottomTexture) {
 
+        int FBO = 2;
+        int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
+        GL44.glBindFramebuffer(GL44.GL_FRAMEBUFFER, FBO);
 
 
         RenderSystem.enableBlend();
         RenderSystem.depthMask(false);
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         for(int i = 0; i < 6; ++i) {
@@ -76,10 +81,24 @@ public class SkyBoxRenderer {
 
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();
+
+
+        GL44.glBindFramebuffer(GL44.GL_FRAMEBUFFER, 1);
     }
 
     public static void render(PoseStack poseStack, int ticks, float partialTick, int alpha, float speed, ResourceLocation folder) {
         SkyBoxRenderer.render(poseStack, ticks, partialTick, alpha, speed,
+                folder.withSuffix("/front.png"),
+                folder.withSuffix("/back.png"),
+                folder.withSuffix("/left.png"),
+                folder.withSuffix("/right.png"),
+                folder.withSuffix("/top.png"),
+                folder.withSuffix("/bottom.png")
+        );
+    }
+
+    public static void renderSimple(PoseStack poseStack, ResourceLocation folder) {
+        SkyBoxRenderer.render(poseStack, 0, 0, 255, 0,
                 folder.withSuffix("/front.png"),
                 folder.withSuffix("/back.png"),
                 folder.withSuffix("/left.png"),
