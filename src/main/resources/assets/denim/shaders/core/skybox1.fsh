@@ -4,7 +4,7 @@
 
 uniform mat4 ModelViewMat;
 uniform mat4 ProjMat;
-uniform vec2 ScreenSize;
+//uniform vec2 ScreenSize;
 
 out vec4 fragColor;
 
@@ -17,11 +17,11 @@ vec3 projectAndDivide(mat4 projectionMatrix, vec3 position) {
 
 void main() {
 
-    //vec4 ndc = vec4(
-    //(gl_FragCoord.x / ScreenSize.x - 0.5) * 2.0,
-    //(gl_FragCoord.y / ScreenSize.y - 0.5) * 2.0,
-    //(gl_FragCoord.z - 0.5) * 2.0,
-    //1.0);
+   // vec4 ndc = vec4(
+   // (gl_FragCoord.x / ScreenSize.x - 0.5) * 2.0,
+   // (gl_FragCoord.y / ScreenSize.y - 0.5) * 2.0,
+   // (gl_FragCoord.z - 0.5) * 2.0,
+   // 1.0);
 
     vec3 viewPos = projectAndDivide(inverse(ProjMat), v_ndc);
     vec3 eyePlayerPos = mat3(inverse(ModelViewMat)) * viewPos;
@@ -38,5 +38,5 @@ void main() {
 
     vec3 fogColorBlend = mix(fogColorClose, fogColorFar, fogStrength);
 
-    fragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    fragColor = vec4(fogColorBlend, 1.0);
 }

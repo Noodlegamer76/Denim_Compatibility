@@ -35,12 +35,12 @@ public class RegisterShadersEvent {
     public static void registerShaders(net.minecraftforge.client.event.RegisterShadersEvent event) throws IOException {
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                         new ResourceLocation(DenimMod.MODID, "test"),
-                        DefaultVertexFormat.BLOCK),
+                        DefaultVertexFormat.POSITION),
                 (e) -> test = e);
 
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                         new ResourceLocation(DenimMod.MODID, "skybox1"),
-                        DefaultVertexFormat.POSITION),
+                        DefaultVertexFormat.BLOCK),
                 (e) -> skybox1 = e);
     }
 

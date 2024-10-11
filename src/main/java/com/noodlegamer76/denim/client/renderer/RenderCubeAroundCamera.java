@@ -26,29 +26,29 @@ public class RenderCubeAroundCamera {
         //ill fix this code up when i get it working
 
 
-        int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
-        GL44.glBindFramebuffer(GL44.GL_FRAMEBUFFER, 2);
+       // int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
+       // GL44.glBindFramebuffer(GL44.GL_FRAMEBUFFER, 2);
 
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
 
-        VertexConsumer vertex = buffer.getBuffer(ModRenderTypes.TEST_RENDERER);
+        VertexConsumer vertex = buffer.getBuffer(RenderType.armorEntityGlint());
 
 
         Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
 
         RenderSystem.enableBlend();
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.stencilFunc(GL44.GL_LESS, 1, 0xFF);
-        RenderSystem.stencilOp(GL44.GL_ZERO, GL44.GL_ZERO, GL44.GL_KEEP);
+        //RenderSystem.stencilMask(0xFF);
+        //RenderSystem.stencilFunc(GL44.GL_LESS, 1, 0xFF);
+        //RenderSystem.stencilOp(GL44.GL_ZERO, GL44.GL_ZERO, GL44.GL_KEEP);
 
-        RenderSystem.setShader(() -> RegisterShadersEvent.test);
+        RenderSystem.setShader(() -> RegisterShadersEvent.skybox1);
 
         for (int i = 0; i < 6; i++) {
             poseStack.pushPose();
 
-            //poseStack.translate(-entity.getBlockPos().getX(), -entity.getBlockPos().getY(), -entity.getBlockPos().getZ());
-            //poseStack.translate(camera.getPosition().x(), camera.getPosition().y(), camera.getPosition().z());
+            poseStack.translate(-entity.getBlockPos().getX(), -entity.getBlockPos().getY(), -entity.getBlockPos().getZ());
+            poseStack.translate(camera.getPosition().x(), camera.getPosition().y(), camera.getPosition().z());
 
             switch (i) {
                 case 1: poseStack.mulPose(Axis.XP.rotationDegrees(90));
@@ -61,7 +61,7 @@ public class RenderCubeAroundCamera {
             poseStack.translate(0, 1, 0);
 
             Matrix4f matrix4f = poseStack.last().pose();
-            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
             bufferBuilder.vertex(matrix4f, -1, 0, -1).color(255, 255, 255, 255).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
             bufferBuilder.vertex(matrix4f, 1, 0, -1).color(255, 255, 255, 255).uv(1, 0).uv2(1, 0).normal(0, 0, 0).endVertex();
             bufferBuilder.vertex(matrix4f, 1, 0, 1).color(255, 255, 255, 255).uv(1, 1).uv2(1, 1).normal(0, 0, 0).endVertex();
@@ -73,15 +73,15 @@ public class RenderCubeAroundCamera {
         }
 
         //for some reason I couldn't get the east plane working so here it is
-        //poseStack.translate(-entity.getBlockPos().getX(), -entity.getBlockPos().getY(), -entity.getBlockPos().getZ());
-        //poseStack.translate(camera.getPosition().x(), camera.getPosition().y(), camera.getPosition().z());
+        poseStack.translate(-entity.getBlockPos().getX(), -entity.getBlockPos().getY(), -entity.getBlockPos().getZ());
+        poseStack.translate(camera.getPosition().x(), camera.getPosition().y(), camera.getPosition().z());
 
         poseStack.pushPose();
         poseStack.mulPose(Axis.ZP.rotationDegrees(-90));
         poseStack.translate(0, 1, 0);
 
         Matrix4f matrix4f = poseStack.last().pose();
-        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.BLOCK);
         bufferBuilder.vertex(matrix4f, -1, 0, -1).color(255, 255, 255, 255).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
         bufferBuilder.vertex(matrix4f, 1, 0, -1).color(255, 255, 255, 255).uv(1, 0).uv2(1, 0).normal(0, 0, 0).endVertex();
         bufferBuilder.vertex(matrix4f, 1, 0, 1).color(255, 255, 255, 255).uv(1, 1).uv2(1, 1).normal(0, 0, 0).endVertex();
@@ -92,10 +92,10 @@ public class RenderCubeAroundCamera {
 
         RenderSystem.disableBlend();
 
-        RenderSystem.clearStencil(0);
+       // RenderSystem.clearStencil(0);
 
 
-        GL44.glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
+       // GL44.glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
 
     }
 }
