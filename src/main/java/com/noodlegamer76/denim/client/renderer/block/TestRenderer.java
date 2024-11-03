@@ -19,8 +19,12 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL44;
 
 import java.util.Objects;
+
+import static com.noodlegamer76.denim.event.RenderEvents.Fbo;
+import static com.noodlegamer76.denim.event.RenderEvents.stencilBufferTexture;
 
 public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer<RenderTester> {
     public static final ResourceLocation SHADER_LOCATION = new ResourceLocation("denim", "shaders/post/linear_fog.json");
@@ -30,7 +34,14 @@ public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer
 
     @Override
     public void render(RenderTester pBlockEntity, float pPartialTick, PoseStack poseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
-         RenderCubeAroundCamera.createCubeWithShader(poseStack, pBlockEntity, pBuffer);
+        int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
+        GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
+
+        RenderSystem.bindTexture(stencilBufferTexture);
+
+        RenderCubeAroundCamera.createCubeWithShader(poseStack, pBlockEntity, pBuffer);
+
+        GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
 //
        // if (Minecraft.getInstance().gameRenderer.currentEffect() == null ||
        //         !(Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/linear_fog.json"))) {
