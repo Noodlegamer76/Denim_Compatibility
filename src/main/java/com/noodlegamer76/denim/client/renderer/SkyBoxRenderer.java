@@ -23,10 +23,10 @@ public class SkyBoxRenderer {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
 
-        GL44.glEnable(GL44.GL_STENCIL_TEST);
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
-        RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
+        //GL44.glEnable(GL44.GL_STENCIL_TEST);
+        //RenderSystem.stencilMask(0xFF);
+        //RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
+        //RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
 
 
         Tesselator tesselator = Tesselator.getInstance();
@@ -86,7 +86,7 @@ public class SkyBoxRenderer {
         }
 
         RenderSystem.depthMask(true);
-        GL44.glDisable(GL44.GL_STENCIL_TEST);
+        //GL44.glDisable(GL44.GL_STENCIL_TEST);
         RenderSystem.disableBlend();
     }
 

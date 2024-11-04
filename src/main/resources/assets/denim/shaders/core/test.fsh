@@ -17,5 +17,13 @@ void main() {
     vec2 texCoord = gl_FragCoord.xy / ScreenSize;
 
     // Sample the texture at the calculated coordinates
+    float mainDepth = texture(MainDepth, texCoord).r;
+    float skyboxDepth = texture(SkyboxDepth, texCoord).r;
+
+
     fragColor = texture(Skybox, texCoord);
+
+    if (mainDepth > skyboxDepth) {
+        discard;
+    }
 }

@@ -9,6 +9,7 @@ import com.noodlegamer76.denim.client.renderer.ModRenderTypes;
 import com.noodlegamer76.denim.client.renderer.RenderCubeAroundCamera;
 import com.noodlegamer76.denim.entity.block.RenderTester;
 import com.noodlegamer76.denim.event.RegisterShadersEvent;
+import com.noodlegamer76.denim.event.RenderEvents;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
@@ -34,14 +35,15 @@ public class TestRenderer<T extends RenderTester> implements BlockEntityRenderer
 
     @Override
     public void render(RenderTester pBlockEntity, float pPartialTick, PoseStack poseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay) {
-        int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
-        GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
+        //int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
+        //GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
+//
+        //RenderSystem.bindTexture(stencilBufferTexture);
 
-        RenderSystem.bindTexture(stencilBufferTexture);
 
         RenderCubeAroundCamera.createCubeWithShader(poseStack, pBlockEntity, pBuffer);
 
-        GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
+        //GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
 //
        // if (Minecraft.getInstance().gameRenderer.currentEffect() == null ||
        //         !(Minecraft.getInstance().gameRenderer.currentEffect().getName().equals("denim:shaders/post/linear_fog.json"))) {
