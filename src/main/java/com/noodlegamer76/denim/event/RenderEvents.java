@@ -6,6 +6,8 @@ import com.noodlegamer76.denim.DenimMod;
 import com.noodlegamer76.denim.client.renderer.RenderCubeAroundCamera;
 import com.noodlegamer76.denim.client.renderer.SkyBoxRenderer;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -15,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL44;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = DenimMod.MODID, value = Dist.CLIENT)
 public class RenderEvents {
@@ -30,6 +33,7 @@ public class RenderEvents {
 
     private static int previousSizeX;
     private static int previousSizeY;
+    public static ArrayList<BlockPos> positions = new ArrayList<>();
     @SubscribeEvent
     public static void levelRenderEvent(RenderLevelStageEvent event) {
 
@@ -72,7 +76,7 @@ public class RenderEvents {
         //    GlStateManager._texParameter(GL44.GL_TEXTURE_2D, GL44.GL_TEXTURE_MAG_FILTER, GL44.GL_LINEAR);
         //    GlStateManager._glFramebufferTexture2D(GL44.GL_FRAMEBUFFER, GL44.GL_COLOR_ATTACHMENT1, GL44.GL_TEXTURE_2D, finalTexture, 0);
 //
-        //    GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
+            GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
 
         }
 
@@ -89,34 +93,29 @@ public class RenderEvents {
             GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
         }
 
-        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_SKY) {
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
 
 
             int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
             GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
+            RenderCubeAroundCamera.createCubeWithShader2(event.getPoseStack(), positions);
             RenderSystem.bindTexture(skyboxTexture);
+
 //
             SkyBoxRenderer.renderSimple(event.getPoseStack(), TEXTURE);
 
-////
-//////
             GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
 
+        }
+
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
+            SkyBoxRenderer.renderSimple4(event.getPoseStack(), TEXTURE);
         }
 
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
             previousSizeY = height;
             previousSizeX = width;
         }
-
-
-
-       // if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER) {
-//
-//
-       //     SkyBoxRenderer.renderSimple4(event.getPoseStack(), TEXTURE);
-//
-       // }
 
 
 

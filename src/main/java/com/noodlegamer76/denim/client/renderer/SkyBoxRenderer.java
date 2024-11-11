@@ -19,14 +19,16 @@ public class SkyBoxRenderer {
                               ResourceLocation rightTexture, ResourceLocation topTexture, ResourceLocation bottomTexture) {
 
         RenderSystem.enableBlend();
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthFunc(GL44.GL_GREATER);
         RenderSystem.depthMask(false);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 
 
-        //GL44.glEnable(GL44.GL_STENCIL_TEST);
-        //RenderSystem.stencilMask(0xFF);
-        //RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
-        //RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
+        GL44.glEnable(GL44.GL_STENCIL_TEST);
+        RenderSystem.stencilMask(0xFF);
+        RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
+        RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
 
 
         Tesselator tesselator = Tesselator.getInstance();
@@ -74,19 +76,19 @@ public class SkyBoxRenderer {
                 poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
                 poseStack.mulPose(Axis.YN.rotationDegrees(180));
             }
-
+            float far = (float) Minecraft.getInstance().gameRenderer.getRenderDistance();
             Matrix4f matrix4f = poseStack.last().pose();
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-            bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
-            bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
-            bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
-            bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, -far, -far, -far).uv(0.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, -far, -far, far).uv(0.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, far, -far, far).uv(1.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, far, -far, -far).uv(1.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
             tesselator.end();
             poseStack.popPose();
         }
 
         RenderSystem.depthMask(true);
-        //GL44.glDisable(GL44.GL_STENCIL_TEST);
+        GL44.glDisable(GL44.GL_STENCIL_TEST);
         RenderSystem.disableBlend();
     }
 
@@ -98,6 +100,8 @@ public class SkyBoxRenderer {
         RenderSystem.enableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.setShader(() -> RegisterShadersEvent.test);
+
+        GlStateManager._glUseProgram(RegisterShadersEvent.test.getId());
 
 
         RenderSystem.activeTexture(GL44.GL_TEXTURE0);
@@ -160,11 +164,12 @@ public class SkyBoxRenderer {
             }
 
             Matrix4f matrix4f = poseStack.last().pose();
+            float far = (float) Minecraft.getInstance().gameRenderer.getMainCamera().getNearPlane().getBottomRight().length() * 2;
             bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -1.0F).uv(0.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
-            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, 1.0F).uv(0.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, 1.0F).uv(1.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
-            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -1.0F).uv(1.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, -far, -far, -far).uv(0.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, -far, -far, far).uv(0.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, far, -far, far).uv(1.0F, 1.0F).color(255, 255, 255, alpha).endVertex();
+            bufferbuilder.vertex(matrix4f, far, -far, -far).uv(1.0F, 0.0F).color(255, 255, 255, alpha).endVertex();
             tesselator.end();
             poseStack.popPose();
         }

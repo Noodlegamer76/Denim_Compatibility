@@ -13,17 +13,18 @@ in vec2 texCoord0;
 out vec4 fragColor;
 
 void main() {
+    ivec2 coord = ivec2(gl_FragCoord.xy);
+    vec4 skybox = texelFetch(Skybox, coord, 0);
 
-    vec2 texCoord = gl_FragCoord.xy / ScreenSize;
-
-    // Sample the texture at the calculated coordinates
-    float mainDepth = texture(MainDepth, texCoord).r;
-    float skyboxDepth = texture(SkyboxDepth, texCoord).r;
-
-
-    fragColor = texture(Skybox, texCoord);
-
-    if (mainDepth > skyboxDepth) {
+    if (skybox.a == 0.0) {
         discard;
     }
+
+    vec4 mainDepth = texelFetch(MainDepth, coord, 0);
+    vec4 skyboxDepth = texelFetch(SkyboxDepth, coord, 0);
+
+    if(mainDepth.r < skyboxDepth.r) {
+        discard;
+    }
+    fragColor = skybox;
 }
