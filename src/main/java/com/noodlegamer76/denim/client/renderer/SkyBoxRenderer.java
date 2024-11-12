@@ -19,16 +19,13 @@ public class SkyBoxRenderer {
                               ResourceLocation rightTexture, ResourceLocation topTexture, ResourceLocation bottomTexture) {
 
         RenderSystem.enableBlend();
-        RenderSystem.enableDepthTest();
-        RenderSystem.depthFunc(GL44.GL_GREATER);
-        RenderSystem.depthMask(false);
-        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
 
-        GL44.glEnable(GL44.GL_STENCIL_TEST);
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
-        RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
+        //GL44.glEnable(GL44.GL_STENCIL_TEST);
+        //RenderSystem.stencilMask(0xFF);
+        //RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
+        //RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
 
 
         Tesselator tesselator = Tesselator.getInstance();
@@ -88,7 +85,7 @@ public class SkyBoxRenderer {
         }
 
         RenderSystem.depthMask(true);
-        GL44.glDisable(GL44.GL_STENCIL_TEST);
+        //GL44.glDisable(GL44.GL_STENCIL_TEST);
         RenderSystem.disableBlend();
     }
 
@@ -107,11 +104,11 @@ public class SkyBoxRenderer {
         //RenderSystem.activeTexture(GL44.GL_TEXTURE0);
         //RenderSystem.bindTexture(RenderEvents.skyboxTexture);
         //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "Skybox"), 0);
-////
+//////
         //RenderSystem.activeTexture(GL44.GL_TEXTURE1);
         //RenderSystem.bindTexture(RenderEvents.stencilBufferTexture);
         //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "SkyboxDepth"), 1);
-////
+//////
         //RenderSystem.activeTexture(GL44.GL_TEXTURE2);
         //RenderSystem.bindTexture(Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
         //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "MainDepth"), 2);

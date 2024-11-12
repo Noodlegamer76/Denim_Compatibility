@@ -23,8 +23,8 @@ void main() {
     vec4 mainDepth = texelFetch(MainDepth, coord, 0);
     vec4 skyboxDepth = texelFetch(SkyboxDepth, coord, 0);
 
-    if(mainDepth.r < skyboxDepth.r) {
-        discard;
-    }
+    //if(mainDepth.r < skyboxDepth.r) {
+    //    discard;
+    //}
     fragColor = skybox;
 }

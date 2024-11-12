@@ -86,35 +86,31 @@ public class RenderEvents {
             width = Minecraft.getInstance().getWindow().getWidth();
             height = Minecraft.getInstance().getWindow().getHeight();
             changeTextureSize();
-            test.setSampler("Skybox", skyboxTexture);
-            test.setSampler("MainDepth", Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
-            test.setSampler("SkyboxDepth", RenderEvents.stencilBufferTexture);
-
-
 
             int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
             GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
+
+            RenderSystem.bindTexture(skyboxTexture);
+//
+
+
             RenderSystem.clear(GL44.GL_DEPTH_BUFFER_BIT | GL44.GL_STENCIL_BUFFER_BIT | GL44.GL_COLOR_BUFFER_BIT, true);
+            SkyBoxRenderer.renderSimple(event.getPoseStack(), TEXTURE);
             GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
+            test.setSampler("Skybox", skyboxTexture);
+            test.setSampler("SkyboxDepth", stencilBufferTexture);
+            test.setSampler("MainDepth", Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
         }
 
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
 
 
-            int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
-            GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
             RenderCubeAroundCamera.createCubeWithShader2(event.getPoseStack(), positions, event.getPartialTick());
-            RenderSystem.bindTexture(skyboxTexture);
-
-//
-            SkyBoxRenderer.renderSimple(event.getPoseStack(), TEXTURE);
-
-            GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
 
         }
 
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_TRANSLUCENT_BLOCKS) {
-            SkyBoxRenderer.renderSimple4(event.getPoseStack(), TEXTURE);
+            //SkyBoxRenderer.renderSimple4(event.getPoseStack(), TEXTURE);
         }
 
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_WEATHER) {

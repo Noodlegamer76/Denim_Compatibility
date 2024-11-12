@@ -8,6 +8,9 @@ import com.noodlegamer76.denim.block.ConfettiTnt;
 import com.noodlegamer76.denim.block.InitBlocks;
 import com.noodlegamer76.denim.client.renderer.ModRenderTypes;
 import com.noodlegamer76.denim.entity.block.PrimedConfettiTnt;
+import com.noodlegamer76.denim.event.RegisterShadersEvent;
+import com.noodlegamer76.denim.event.RenderEvents;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.ZombieModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -17,6 +20,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockModel;
+import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.TntMinecartRenderer;
@@ -33,7 +37,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.ModelData;
 import org.lwjgl.opengl.GL44;
 
-import static com.noodlegamer76.denim.event.RenderEvents.Fbo;
+import static com.noodlegamer76.denim.event.RegisterShadersEvent.test;
+import static com.noodlegamer76.denim.event.RenderEvents.*;
 
 @OnlyIn(Dist.CLIENT)
 public class ConfettiTntRenderer extends EntityRenderer<PrimedConfettiTnt> {
@@ -49,13 +54,13 @@ public class ConfettiTntRenderer extends EntityRenderer<PrimedConfettiTnt> {
 
     @Override
     public void render(PrimedConfettiTnt pEntity, float pEntityYaw, float pPartialTicks, PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight) {
-        int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
-        GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
-
-        GL44.glEnable(GL44.GL_STENCIL_TEST);
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
-        RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
+        //int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
+        //GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
+//
+        //GL44.glEnable(GL44.GL_STENCIL_TEST);
+        //RenderSystem.stencilMask(0xFF);
+        //RenderSystem.stencilFunc(GL44.GL_EQUAL, 1, 0xFF);
+        //RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_KEEP);
 
         pMatrixStack.pushPose();
         pMatrixStack.translate(0.0F, 0.5F, 0.0F);
@@ -77,11 +82,12 @@ public class ConfettiTntRenderer extends EntityRenderer<PrimedConfettiTnt> {
         pMatrixStack.mulPose(Axis.YP.rotationDegrees(90.0F));
         //blockRenderer.renderSingleBlock(InitBlocks.CONFETTI_TNT.get().defaultBlockState(), pMatrixStack, pBuffer, pPackedLight, 1, net.minecraftforge.client.model.data.ModelData.EMPTY, ModRenderTypes.SKYBOX);
         //TntMinecartRenderer.renderWhiteSolidBlock(this.blockRenderer, InitBlocks.CONFETTI_TNT.get().defaultBlockState(), pMatrixStack, pBuffer, pPackedLight, i / 5 % 2 == 0);
-        model.renderToBuffer(pMatrixStack, pBuffer.getBuffer(ModRenderTypes.TEST_RENDERER), pPackedLight, 0, 255, 255, 255, 255);;
+
+        model.renderToBuffer(pMatrixStack, pBuffer.getBuffer(ModRenderTypes.SKYBOX), pPackedLight, 0, 255, 255, 255, 255);
 
 
         pMatrixStack.popPose();
-        GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
+        //GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, current);
         //super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);
     }
 

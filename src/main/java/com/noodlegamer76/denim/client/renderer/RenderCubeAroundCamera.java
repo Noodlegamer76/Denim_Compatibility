@@ -341,13 +341,27 @@ public class RenderCubeAroundCamera {
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         RenderSystem.enableBlend();
-        GL44.glEnable(GL44.GL_STENCIL_TEST);
-        RenderSystem.stencilMask(0xFF);
-        RenderSystem.stencilFunc(GL44.GL_ALWAYS, 1, 0xFF);
-        RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_REPLACE);
+        //GL44.glEnable(GL44.GL_STENCIL_TEST);
+        //RenderSystem.stencilMask(0xFF);
+        //RenderSystem.stencilFunc(GL44.GL_ALWAYS, 1, 0xFF);
+        //RenderSystem.stencilOp(GL44.GL_KEEP, GL44.GL_KEEP, GL44.GL_REPLACE);
 
         // Set the shader once for the entire batch
-        RenderSystem.setShader(GameRenderer::getPositionShader);
+        RenderSystem.setShader(() -> RegisterShadersEvent.test);
+
+        //GlStateManager._glUseProgram(RegisterShadersEvent.test.getId());
+//
+        //RenderSystem.activeTexture(GL44.GL_TEXTURE0);
+        //RenderSystem.bindTexture(RenderEvents.skyboxTexture);
+        //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "Skybox"), 0);
+//////
+        //RenderSystem.activeTexture(GL44.GL_TEXTURE1);
+        //RenderSystem.bindTexture(RenderEvents.stencilBufferTexture);
+        //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "SkyboxDepth"), 1);
+//////
+        //RenderSystem.activeTexture(GL44.GL_TEXTURE2);
+        //RenderSystem.bindTexture(Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
+        //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "MainDepth"), 2);
 
         // Begin batching by defining the geometry in a single buffer
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
@@ -381,10 +395,10 @@ public class RenderCubeAroundCamera {
                 Matrix4f matrix4f = poseStack.last().pose();
 
                 // Add the 4 vertices for this quad to the buffer
-                bufferBuilder.vertex(matrix4f, -1, 0, -1).color(255, 255, 255, 0).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
-                bufferBuilder.vertex(matrix4f, 1, 0, -1).color(255, 255, 255, 0).uv(1, 0).uv2(1, 0).normal(0, 0, 0).endVertex();
-                bufferBuilder.vertex(matrix4f, 1, 0, 1).color(255, 255, 255, 0).uv(1, 1).uv2(1, 1).normal(0, 0, 0).endVertex();
-                bufferBuilder.vertex(matrix4f, -1, 0, 1).color(255, 255, 255, 0).uv(0, 1).uv2(0, 1).normal(0, 0, 0).endVertex();
+                bufferBuilder.vertex(matrix4f, -1, 0, -1).color(255, 255, 255, 100).uv(0, 0).uv2(0, 0).normal(0, 0, 0).endVertex();
+                bufferBuilder.vertex(matrix4f, 1, 0, -1).color(255, 255, 255, 100).uv(1, 0).uv2(1, 0).normal(0, 0, 0).endVertex();
+                bufferBuilder.vertex(matrix4f, 1, 0, 1).color(255, 255, 255, 100).uv(1, 1).uv2(1, 1).normal(0, 0, 0).endVertex();
+                bufferBuilder.vertex(matrix4f, -1, 0, 1).color(255, 255, 255, 100).uv(0, 1).uv2(0, 1).normal(0, 0, 0).endVertex();
 
                 poseStack.popPose();  // Restore the original pose
             }
@@ -395,7 +409,7 @@ public class RenderCubeAroundCamera {
 
         // Disable unnecessary OpenGL states after the batch is rendered
         RenderSystem.disableBlend();
-        GL44.glDisable(GL44.GL_STENCIL_TEST);
+        //GL44.glDisable(GL44.GL_STENCIL_TEST);
         positions.clear();
     }
 

@@ -14,18 +14,6 @@ import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 
 public class ModRenderTypes extends RenderStateShard {
-    public static RenderTarget rendertarget1 = Minecraft.getInstance().gameRenderer.currentEffect().getTempTarget("skybox_target");
-    protected static final RenderStateShard.OutputStateShard TRANSLUCENT_TARGET = new RenderStateShard.OutputStateShard("skybox_target", () -> {
-        if (Minecraft.useShaderTransparency()) {
-            rendertarget1.bindWrite(false);
-        }
-
-    }, () -> {
-        if (Minecraft.useShaderTransparency()) {
-            rendertarget1.bindWrite(false);
-        }
-
-    });
 
     public static final RenderType TEST_RENDERER = RenderType.create(
             "test",
@@ -67,11 +55,7 @@ public class ModRenderTypes extends RenderStateShard {
             true,
             true,
             RenderType.CompositeState.builder()
-                    .setLightmapState(LIGHTMAP)
                     .setShaderState(new RenderStateShard.ShaderStateShard(() -> RegisterShadersEvent.test))
-                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
-                    .setOutputState(RenderStateShard.MAIN_TARGET)
-                    .setTexturingState(RenderStateShard.DEFAULT_TEXTURING)
                     .createCompositeState(true)
     );
 
