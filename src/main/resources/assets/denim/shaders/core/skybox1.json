@@ -14,7 +14,9 @@
         "Normal"
     ],
     "samplers": [
-        { "name": "skybox1" }
+        { "name": "sampler1" },
+        { "name": "sampler2"},
+        { "name": "sampler3"}
     ],
     "uniforms": [
         { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },

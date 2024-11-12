@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import static com.noodlegamer76.denim.event.RenderEvents.skyboxTexture;
+
 
 @Mod.EventBusSubscriber(modid = DenimMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RegisterShadersEvent {
@@ -37,6 +39,8 @@ public class RegisterShadersEvent {
                         new ResourceLocation(DenimMod.MODID, "test"),
                         DefaultVertexFormat.POSITION),
                 (e) -> test = e);
+
+
 
         event.registerShader(new ShaderInstance(event.getResourceProvider(),
                         new ResourceLocation(DenimMod.MODID, "skybox1"),

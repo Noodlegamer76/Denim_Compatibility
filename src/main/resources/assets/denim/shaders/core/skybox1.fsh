@@ -4,43 +4,30 @@
 
 uniform mat4 ModelViewMat;
 uniform mat4 ProjMat;
-uniform vec2 screenSize;
-uniform sampler2D skybox1;
+uniform sampler2D sampler1;
+uniform sampler2D sampler2;
+uniform sampler2D sampler3;
+uniform vec2 ScreenSize;
 
 out vec4 fragColor;
 
 noperspective in vec3 v_ndc;
-in vec2 texCoord;
+in vec2 texCoords0;
 
-vec3 projectAndDivide(mat4 projectionMatrix, vec3 position) {
-    vec4 homogeneousPos = projectionMatrix * vec4(position, 1.0);
-    return homogeneousPos.xyz / homogeneousPos.w;
-}
 
 void main() {
-   //ivec2 textureSizeValue = textureSize(skybox1, 0);
+    ivec2 coord = ivec2(gl_FragCoord.xy);
+    vec4 skybox = texelFetch(sampler1, coord, 0);
 
-   //vec4 texel1 = texture(skybox1, texCoord, 0);
-   // vec4 ndc = vec4(
-   // (gl_FragCoord.x / ScreenSize.x - 0.5) * 2.0,
-   // (gl_FragCoord.y / ScreenSize.y - 0.5) * 2.0,
-   // (gl_FragCoord.z - 0.5) * 2.0,
-   // 1.0);
+    if (skybox.a == 0.0) {
+        discard;
+    }
 
-   //vec3 viewPos = projectAndDivide(inverse(ProjMat), v_ndc);
-   //vec3 eyePlayerPos = mat3(inverse(ModelViewMat)) * viewPos;
+    vec4 mainDepth = texelFetch(sampler2, coord, 0);
+    vec4 skyboxDepth = texelFetch(sampler3, coord, 0);
 
-   //float DistanceFromCamera = length(viewPos);
-
-   //vec3 fogColorClose = vec3(1.0,0.,0.);
-   //vec3 fogColorFar = vec3(1.0,0.,0.);
-
-   //float fogMinimum = 0.;
-   //float fogMaximum = 1.25;
-
-   //float fogStrength = float(max(min((DistanceFromCamera - fogMinimum) / (fogMaximum - fogMinimum), 1.0), 0.0));
-
-   //vec3 fogColorBlend = mix(fogColorClose, fogColorFar, fogStrength);
-
-    fragColor = vec4(1.0, 1.0, 1.0, 0.0);
+    if(mainDepth.r < skyboxDepth.r) {
+        discard;
+    }
+    fragColor = skybox;
 }

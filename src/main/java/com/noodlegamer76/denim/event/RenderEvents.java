@@ -19,9 +19,11 @@ import org.lwjgl.opengl.GL44;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
+import static com.noodlegamer76.denim.event.RegisterShadersEvent.test;
+
 @Mod.EventBusSubscriber(modid = DenimMod.MODID, value = Dist.CLIENT)
 public class RenderEvents {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(DenimMod.MODID, "textures/environment/layer1/skybox1");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(DenimMod.MODID, "textures/environment/layer1/nebula");
     private static boolean fboSetup = false;
     public static int Fbo;
     public static int rbo;
@@ -84,6 +86,9 @@ public class RenderEvents {
             width = Minecraft.getInstance().getWindow().getWidth();
             height = Minecraft.getInstance().getWindow().getHeight();
             changeTextureSize();
+            test.setSampler("Skybox", skyboxTexture);
+            test.setSampler("MainDepth", Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
+            test.setSampler("SkyboxDepth", RenderEvents.stencilBufferTexture);
 
 
 
@@ -98,7 +103,7 @@ public class RenderEvents {
 
             int current = GL44.glGetInteger(GL44.GL_FRAMEBUFFER_BINDING);
             GlStateManager._glBindFramebuffer(GL44.GL_FRAMEBUFFER, Fbo);
-            RenderCubeAroundCamera.createCubeWithShader2(event.getPoseStack(), positions);
+            RenderCubeAroundCamera.createCubeWithShader2(event.getPoseStack(), positions, event.getPartialTick());
             RenderSystem.bindTexture(skyboxTexture);
 
 //

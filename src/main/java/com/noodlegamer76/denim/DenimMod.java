@@ -3,6 +3,7 @@ package com.noodlegamer76.denim;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.logging.LogUtils;
 import com.noodlegamer76.denim.block.InitBlocks;
+import com.noodlegamer76.denim.client.models.BlockModel;
 import com.noodlegamer76.denim.client.renderer.ModDimensionSpecialEffects;
 import com.noodlegamer76.denim.client.renderer.block.TestRenderer;
 import com.noodlegamer76.denim.client.renderer.entity.ConfettiTntRenderer;
@@ -123,7 +124,13 @@ public class DenimMod
         public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(InitBlockEntities.RENDER_TESTER.get(), TestRenderer::new);
 
-           // event.registerEntityRenderer(InitEntity.CONFETTI_TNT.get(), ConfettiTntRenderer::new);
+            event.registerEntityRenderer(InitEntity.CONFETTI_TNT.get(), ConfettiTntRenderer::new);
         }
+
+        @SubscribeEvent
+        public static void layerSetup(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(BlockModel.LAYER_LOCATION, BlockModel::createBodyLayer);
+    }
+
     }
 }

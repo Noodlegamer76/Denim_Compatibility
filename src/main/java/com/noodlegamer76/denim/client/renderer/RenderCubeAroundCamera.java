@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import com.noodlegamer76.denim.client.renderer.block.TestRenderer;
 import com.noodlegamer76.denim.event.RegisterShadersEvent;
 import com.noodlegamer76.denim.event.RenderEvents;
 import net.minecraft.client.Camera;
@@ -15,6 +16,7 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL44;
 
@@ -23,6 +25,7 @@ import java.util.ArrayList;
 import java.util.function.IntSupplier;
 
 import static com.noodlegamer76.denim.event.RenderEvents.Fbo;
+import static com.noodlegamer76.denim.event.RenderEvents.levelRenderEvent;
 
 public class RenderCubeAroundCamera {
 
@@ -327,12 +330,12 @@ public class RenderCubeAroundCamera {
         }
 
 
-    public static void createCubeWithShader2(PoseStack poseStack, ArrayList<BlockPos> positions) {
+    public static void createCubeWithShader2(PoseStack poseStack, ArrayList<BlockPos> positions, float partialTicks) {
         // Get a reference to the Tesselator and BufferBuilder for batch rendering
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
 
-        Camera camera = Minecraft.getInstance().gameRenderer.getMainCamera();
+        Vec3 camera = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
 
         // Enable necessary OpenGL states
         RenderSystem.depthMask(true);
@@ -358,7 +361,7 @@ public class RenderCubeAroundCamera {
                 poseStack.translate(0.5, 0.5, 0.5);
 
                 // Translate the position to the correct location
-                poseStack.translate(-camera.getPosition().x(), -camera.getPosition().y(), -camera.getPosition().z());
+                poseStack.translate(-camera.x, -camera.y, -camera.z);
                 poseStack.translate(pos.getX(), pos.getY(), pos.getZ());
 
                 // Apply the appropriate rotation for each face of the cube

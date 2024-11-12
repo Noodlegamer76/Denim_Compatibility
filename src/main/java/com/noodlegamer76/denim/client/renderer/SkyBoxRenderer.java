@@ -104,17 +104,17 @@ public class SkyBoxRenderer {
         GlStateManager._glUseProgram(RegisterShadersEvent.test.getId());
 
 
-        RenderSystem.activeTexture(GL44.GL_TEXTURE0);
-        RenderSystem.bindTexture(RenderEvents.skyboxTexture);
-        RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "Skybox"), 0);
-//
-        RenderSystem.activeTexture(GL44.GL_TEXTURE1);
-        RenderSystem.bindTexture(RenderEvents.stencilBufferTexture);
-        RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "SkyboxDepth"), 1);
-//
-        RenderSystem.activeTexture(GL44.GL_TEXTURE2);
-        RenderSystem.bindTexture(Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
-        RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "MainDepth"), 2);
+        //RenderSystem.activeTexture(GL44.GL_TEXTURE0);
+        //RenderSystem.bindTexture(RenderEvents.skyboxTexture);
+        //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "Skybox"), 0);
+////
+        //RenderSystem.activeTexture(GL44.GL_TEXTURE1);
+        //RenderSystem.bindTexture(RenderEvents.stencilBufferTexture);
+        //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "SkyboxDepth"), 1);
+////
+        //RenderSystem.activeTexture(GL44.GL_TEXTURE2);
+        //RenderSystem.bindTexture(Minecraft.getInstance().getMainRenderTarget().getDepthTextureId());
+        //RenderSystem.glUniform1i(GL44.glGetUniformLocation(RegisterShadersEvent.test.getId(), "MainDepth"), 2);
 
 
         Tesselator tesselator = Tesselator.getInstance();
